@@ -1,8 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "Evidexa Screenshot",
+  "name": "Evidexa Viewport",
   "version": "2.0.0",
-  "description": "Capture full-page screenshots with one click",
+  "description": "Full-page, device-emulated, and region screenshots for any page. Panel-aware stitching, PNG/JPEG/PDF export, local history.",
+  "short_name": "Evidexa",
   "permissions": ["activeTab", "scripting", "contextMenus", "tabs", "storage", "debugger"],
   "host_permissions": ["<all_urls>"],
   "background": { "service_worker": "background.js" },
