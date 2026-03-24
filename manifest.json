@@ -3,7 +3,7 @@
   "name": "Evidexa Viewport",
   "version": "2.0.0",
   "description": "Full-page, device-emulated, and region screenshots for any page. Panel-aware stitching, PNG/JPEG/PDF export, local history.",
-  "short_name": "Evidexa",
+  "short_name": "Viewport",
   "permissions": ["activeTab", "scripting", "contextMenus", "tabs", "storage", "debugger"],
   "host_permissions": ["<all_urls>"],
   "background": { "service_worker": "background.js" },
