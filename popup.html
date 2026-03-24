@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evidexa Screenshot</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div id="header">
+    <img src="icons/icon32.png" alt="Evidexa" class="logo" />
+    <span class="brand">Evidexa Screenshot</span>
+  </div>
+
+  <div id="state-idle" class="state hidden">
+    <p class="hint">Click <strong>Capture</strong> to screenshot this page.</p>
+    <button id="btn-start">Capture Full Page</button>
+  </div>
+
+  <div id="state-capturing" class="state hidden">
+    <div class="spinner-wrap">
+      <div class="spinner"></div>
+    </div>
+    <p id="progress-label" class="progress-label">Preparing…</p>
+    <div class="progress-track">
+      <div id="progress-fill" class="progress-fill"></div>
+    </div>
+    <button id="btn-cancel" class="btn-cancel">Cancel</button>
+  </div>
+
+  <div id="state-long-scroll" class="state hidden">
+    <p class="ls-title">Long page detected</p>
+    <p id="ls-desc" class="ls-desc">This page has a lot of content below the fold.</p>
+    <p class="ls-prompt">How much do you want to capture?</p>
+    <div class="ls-options">
+      <button class="ls-btn" data-tiles="5">5 screens</button>
+      <button class="ls-btn" data-tiles="10">10 screens</button>
+      <button class="ls-btn" data-tiles="20">20 screens</button>
+      <button class="ls-btn ls-btn-all" data-tiles="0">Capture all</button>
+    </div>
+    <button id="btn-ls-cancel" class="btn-cancel" style="margin-top:8px">Cancel</button>
+  </div>
+
+  <div id="state-done" class="state hidden">
+    <div class="done-icon">✓</div>
+    <p class="done-msg">Screenshot saved!</p>
+    <p class="done-sub">Opening result tab…</p>
+  </div>
+
+  <div id="state-error" class="state hidden">
+    <div class="error-icon">✕</div>
+    <p id="error-msg" class="error-msg">An error occurred.</p>
+    <button id="btn-retry">Try Again</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

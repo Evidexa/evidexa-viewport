@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evidexa Screenshot</title>
+  <link rel="stylesheet" href="tab.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-brand">
+      <img src="icons/icon32.png" alt="Evidexa" class="header-logo" />
+      <span class="header-title">Evidexa Screenshot</span>
+    </div>
+    <nav class="tab-nav">
+      <button class="tab-btn active" data-tab="capture">Current Capture</button>
+      <button class="tab-btn" data-tab="history">History</button>
+      <button class="tab-btn" data-tab="settings">Settings</button>
+    </nav>
+  </header>
+
+  <!-- ── Current Capture ── -->
+  <section id="tab-capture" class="tab-panel">
+    <div id="capture-loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading capture…</p>
+    </div>
+
+    <div id="capture-empty" class="empty-state hidden">
+      <div class="empty-icon">📷</div>
+      <h2>No capture found</h2>
+      <p>Use the toolbar button or press <kbd>⌘⇧Y</kbd> to take a screenshot.</p>
+    </div>
+
+    <div id="capture-content" class="hidden">
+      <div class="capture-layout">
+        <div class="preview-col">
+          <div class="zoom-toolbar">
+            <button class="zoom-btn" data-zoom-out data-target="preview-img">&#x2212;</button>
+            <span class="zoom-level" id="zoom-level-main">Fit</span>
+            <button class="zoom-btn" data-zoom-in data-target="preview-img">&#x2b;</button>
+            <button class="zoom-btn zoom-fit" data-zoom-fit data-target="preview-img">Fit</button>
+            <span class="zoom-divider"></span>
+            <button class="zoom-btn zoom-fullscreen" id="btn-lightbox-main" title="Full screen">&#x26F6;</button>
+          </div>
+          <div class="preview-wrap" id="preview-wrap">
+            <img id="preview-img" class="preview-img" alt="Screenshot preview" />
+          </div>
+        </div>
+        <div class="meta-col">
+          <div class="meta-card">
+            <div class="meta-row">
+              <span class="meta-label">Source</span>
+              <a id="meta-url" class="meta-url" href="#" target="_blank" rel="noopener"></a>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Title</span>
+              <span id="meta-title" class="meta-value"></span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Size</span>
+              <span id="meta-size" class="meta-value"></span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Captured</span>
+              <span id="meta-time" class="meta-value"></span>
+            </div>
+            <div id="meta-capped" class="meta-warning hidden">
+              ⚠ Page too tall — capture was limited.
+            </div>
+            <div id="meta-device-row" class="meta-row hidden">
+              <span class="meta-label">Device</span>
+              <span id="meta-device" class="meta-value meta-device-badge"></span>
+            </div>
+          </div>
+
+          <div class="download-section">
+            <p class="section-label">Download</p>
+            <button id="btn-download-png" class="download-btn">
+              <span class="dl-icon">↓</span> PNG
+            </button>
+            <button id="btn-download-jpeg" class="download-btn">
+              <span class="dl-icon">↓</span> JPEG
+            </button>
+            <button id="btn-download-pdf" class="download-btn">
+              <span class="dl-icon">↓</span> PDF
+            </button>
+          </div>
+          <div class="copy-section">
+            <p class="section-label">Clipboard</p>
+            <button id="btn-copy-png" class="download-btn download-btn-copy">
+              <span class="dl-icon">⎘</span> Copy PNG
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── History ── -->
+  <section id="tab-history" class="tab-panel hidden">
+    <div id="history-loading" class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading history…</p>
+    </div>
+
+    <div id="history-empty" class="empty-state hidden">
+      <div class="empty-icon">🗂</div>
+      <h2>No screenshots yet</h2>
+      <p>Your captures will appear here, tagged by site and date.</p>
+    </div>
+
+    <div id="history-grid" class="history-grid hidden"></div>
+
+    <!-- Detail panel (slides in) -->
+    <div id="history-detail" class="history-detail hidden">
+      <button id="detail-back" class="detail-back">← Back to History</button>
+      <div class="capture-layout">
+        <div class="preview-col">
+          <div class="zoom-toolbar">
+            <button class="zoom-btn" data-zoom-out data-target="detail-preview-img">&#x2212;</button>
+            <span class="zoom-level" id="zoom-level-detail">Fit</span>
+            <button class="zoom-btn" data-zoom-in data-target="detail-preview-img">&#x2b;</button>
+            <button class="zoom-btn zoom-fit" data-zoom-fit data-target="detail-preview-img">Fit</button>
+            <span class="zoom-divider"></span>
+            <button class="zoom-btn zoom-fullscreen" id="btn-lightbox-detail" title="Full screen">&#x26F6;</button>
+          </div>
+          <div class="preview-wrap" id="detail-preview-wrap">
+            <img id="detail-preview-img" class="preview-img" alt="Screenshot" />
+          </div>
+        </div>
+        <div class="meta-col">
+          <div class="meta-card">
+            <div class="meta-row">
+              <span class="meta-label">Source</span>
+              <a id="detail-url" class="meta-url" href="#" target="_blank" rel="noopener"></a>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Title</span>
+              <span id="detail-title" class="meta-value"></span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Size</span>
+              <span id="detail-size" class="meta-value"></span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Captured</span>
+              <span id="detail-time" class="meta-value"></span>
+            </div>
+            <div id="detail-device-row" class="meta-row hidden">
+              <span class="meta-label">Device</span>
+              <span id="detail-device" class="meta-value meta-device-badge"></span>
+            </div>
+          </div>
+          <div class="download-section">
+            <p class="section-label">Download</p>
+            <button id="detail-btn-png" class="download-btn">
+              <span class="dl-icon">↓</span> PNG
+            </button>
+            <button id="detail-btn-jpeg" class="download-btn">
+              <span class="dl-icon">↓</span> JPEG
+            </button>
+            <button id="detail-btn-pdf" class="download-btn">
+              <span class="dl-icon">↓</span> PDF
+            </button>
+          </div>
+          <div class="copy-section">
+            <p class="section-label">Clipboard</p>
+            <button id="detail-btn-copy-png" class="download-btn download-btn-copy">
+              <span class="dl-icon">⎘</span> Copy PNG
+            </button>
+          </div>
+          <button id="detail-btn-delete" class="btn-danger" style="margin-top:16px">
+            Delete This Capture
+          </button>
+          <div id="detail-confirm-delete" class="confirm-row hidden">
+            <span>Are you sure?</span>
+            <button id="detail-confirm-yes" class="btn-danger-sm">Delete</button>
+            <button id="detail-confirm-no" class="btn-ghost-sm">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Settings ── -->
+  <section id="tab-settings" class="tab-panel hidden">
+    <div class="settings-page">
+      <h2 class="settings-heading">Storage</h2>
+      <div class="storage-bar-wrap">
+        <div class="storage-track">
+          <div id="storage-fill" class="storage-fill"></div>
+        </div>
+        <p id="storage-label" class="storage-label">Calculating…</p>
+      </div>
+      <div id="storage-warning" class="storage-warning hidden">
+        ⚠ Storage usage is high. Consider deleting old screenshots.
+      </div>
+      <button id="btn-clear-all" class="btn-danger" style="margin-top:16px">
+        Clear All History
+      </button>
+      <div id="clear-confirm" class="confirm-row hidden">
+        <span>Delete all screenshots permanently?</span>
+        <button id="clear-confirm-yes" class="btn-danger-sm">Delete All</button>
+        <button id="clear-confirm-no" class="btn-ghost-sm">Cancel</button>
+      </div>
+
+      <h2 class="settings-heading" style="margin-top:32px">Behaviour</h2>
+      <div class="settings-row">
+        <label class="settings-toggle-label">
+          <input type="checkbox" id="setting-auto-copy" />
+          Auto-copy screenshot to clipboard after each capture
+        </label>
+      </div>
+
+      <h2 class="settings-heading" style="margin-top:32px">Device Presets</h2>
+      <p class="settings-sub">Standard presets appear in the right-click menu on the extension button.</p>
+      <div id="device-presets-standard" class="presets-list"></div>
+      <div id="device-presets-custom" class="presets-list" style="margin-top:8px"></div>
+      <button id="btn-add-preset" class="btn-secondary" style="margin-top:10px">+ Add Custom Preset</button>
+      <div id="add-preset-form" class="add-preset-form hidden">
+        <input id="preset-name" type="text" placeholder="Name (e.g. My Tablet)" class="preset-input" />
+        <div class="preset-dims-row">
+          <input id="preset-width" type="number" placeholder="Width" min="200" max="3840" class="preset-input-sm" />
+          <span class="preset-x">×</span>
+          <input id="preset-height" type="number" placeholder="Height" min="200" max="3840" class="preset-input-sm" />
+          <input id="preset-dpr" type="number" placeholder="DPR" min="0.5" max="4" step="0.5" class="preset-input-xs" />
+        </div>
+        <label class="settings-toggle-label" style="margin-top:6px">
+          <input type="checkbox" id="preset-mobile" /> Mobile user agent
+        </label>
+        <div class="preset-actions">
+          <button id="btn-save-preset" class="btn-primary-sm">Save</button>
+          <button id="btn-cancel-preset" class="btn-ghost-sm">Cancel</button>
+        </div>
+      </div>
+
+      <h2 class="settings-heading" style="margin-top:32px">About</h2>
+      <div class="about-card">
+        <p><strong>Evidexa Screenshot</strong> v2.0.0</p>
+        <p class="about-sub">Full-page screenshots, stored locally on your device.</p>
+        <p class="about-sub" id="about-ext-id"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox hidden">
+    <button id="lightbox-close" class="lightbox-close">✕</button>
+    <img id="lightbox-img" class="lightbox-img" alt="Full screenshot" />
+  </div>
+
+  <script src="lib/jspdf.umd.min.js"></script>
+  <script type="module" src="tab.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!--
+  Mimics an Outlook / Gmail virtual-scroll email list (fixed-shell SPA pattern).
+
+  Classifier expected behaviour:
+    • mode = "fixed-shell-or-ambiguous"  (veto fires)
+    • Veto reason: scrollRatio > 10  AND  hasSpacer = true
+        – #email-list.scrollHeight ≈ 20 000 px, clientHeight ≈ vpH - 48px
+          → scrollRatio ≈ 18  (> 10, first gate)
+        – #virtual-rail has inline style="height:20000px;…"
+          → parseFloat(ch.style.height) = 20 000 > 3 × clientH ≈ 3 396
+          → hasSpacer = true  (second gate)
+        → isVetoed = true → fixed-shell-or-ambiguous
+
+  Virtual-scroll libraries (react-window, TanStack Virtual, AG Grid) always set
+  the spacer rail height as an inline style so JS can update it dynamically.
+  Real content containers derive their height from layout flow; style.height = "".
+
+  Test assertion: captured height ≈ device.height × dpr  (±5%)
+-->
+<html style="height:100vh;overflow:hidden">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Virtual Scroll SPA Fixture</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+      font-family: -apple-system, sans-serif;
+      background: #f0f0f0;
+    }
+
+    #shell {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #toolbar {
+      height: 48px;
+      background: #1d2333;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    #body-row {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    #sidebar {
+      width: 220px;
+      background: #1a1f2e;
+      color: #aab;
+      flex-shrink: 0;
+      padding: 12px 8px;
+      font-size: 13px;
+      overflow: hidden;
+    }
+
+    #sidebar li { list-style: none; padding: 6px 8px; border-radius: 4px; }
+    #sidebar li:first-child { background: rgba(255,255,255,.12); color: #fff; }
+
+    /*
+      Primary scroll surface: >50% viewport width and >50% viewport height.
+      The classifier will find this as the single candidate.
+      scrollHeight = 20 000 px  (set by #virtual-rail)
+      clientHeight ≈ vpH - 48
+      → scrollRatio ≈ 18  (> 10, first veto gate passes)
+    */
+    #email-list {
+      flex: 1;
+      overflow-y: auto;
+      background: #fff;
+      position: relative;
+    }
+
+    /* The windowed row container — absolutely positioned, only 5 rows rendered */
+    #rendered-rows {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .email-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 16px;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+      gap: 12px;
+      background: #fff;
+    }
+    .email-row:nth-child(even) { background: #fafafa; }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: #18b5b3; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="shell">
+    <div id="toolbar">Evidexa — Virtual Scroll SPA Fixture</div>
+    <div id="body-row">
+      <div id="sidebar">
+        <ul>
+          <li>Inbox</li>
+          <li>Sent</li>
+          <li>Drafts</li>
+          <li>Archive</li>
+        </ul>
+      </div>
+      <div id="email-list">
+        <!-- Single rail div (the virtual-scroll spacer) — inline height is how
+             react-window / TanStack Virtual set the spacer height at runtime. -->
+        <div id="virtual-rail" style="height:20000px;position:relative">
+          <!-- Only 5 rows rendered, as a virtual-scroll library would do -->
+          <div id="rendered-rows">
+            <div class="email-row"><div class="avatar">AB</div><div>Q2 roadmap review — Sender 1</div></div>
+            <div class="email-row"><div class="avatar">CD</div><div>Re: design feedback — Sender 2</div></div>
+            <div class="email-row"><div class="avatar">EF</div><div>Weekly sync notes — Sender 3</div></div>
+            <div class="email-row"><div class="avatar">GH</div><div>Invoice attached — Sender 4</div></div>
+            <div class="email-row"><div class="avatar">IJ</div><div>Action required — Sender 5</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

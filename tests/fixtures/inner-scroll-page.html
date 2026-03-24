@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+  Single-safe-inner-surface fixture (Airtable/form pattern).
+  html/body locked to viewport. One dominant inner scroll with real stacked content.
+  Classifier: mode = "single-safe-inner-surface" → viewport expanded → height > device.height × dpr.
+-->
+<html style="height:100vh;overflow:hidden">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Inner Scroll Fixture</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100vh; overflow: hidden; font-family: -apple-system, sans-serif; background: #f5f5f5; }
+    #shell { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    #toolbar { height: 48px; background: #1d2333; color: #fff; display: flex; align-items: center; padding: 0 16px; font-weight: 600; flex-shrink: 0; }
+    /* Single dominant scroll surface: occupies >50% vp width and height. Real stacked content. */
+    #content { flex: 1; overflow-y: auto; background: #fff; padding: 24px; }
+    .section { margin-bottom: 24px; padding: 20px; background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; }
+    .section h2 { font-size: 16px; margin-bottom: 8px; color: #1d2333; }
+    .section p { font-size: 14px; color: #555; line-height: 1.5; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #333; }
+    input, textarea { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
+    textarea { height: 80px; resize: none; }
+  </style>
+</head>
+<body>
+  <div id="shell">
+    <div id="toolbar">Evidexa — Inner Scroll Fixture</div>
+    <div id="content">
+      <script>
+        var sections = [
+          ['Company Overview','Describe your company mission and the problem you solve.'],
+          ['Product Description','What does your product do? How does it work?'],
+          ['Target Market','Who are your primary customers?'],
+          ['Competitive Landscape','Who are your main competitors?'],
+          ['Revenue Model','How does your company generate revenue?'],
+          ['Traction & Metrics','Share key metrics: users, revenue, growth rate.'],
+          ['Team Background','Describe your founding team and their expertise.'],
+          ['Funding History','Previous funding rounds and investors.'],
+          ['Use of Funds','How will you use this investment?'],
+          ['Technical Architecture','Describe your core technology stack.'],
+          ['Data & Privacy','How do you handle user data and privacy compliance?'],
+          ['Regulatory Considerations','Any regulatory requirements for your product?'],
+          ['Partnerships','Key strategic partnerships or integrations.'],
+          ['Go-to-Market Strategy','How do you acquire customers?'],
+          ['12-Month Roadmap','What are your key milestones for the next year?'],
+          ['Long-Term Vision','Where do you see the company in 5 years?'],
+          ['Risk Factors','What are the biggest risks to your business?'],
+          ['Exit Strategy','What are your potential exit scenarios?'],
+          ['References','Provide 2-3 customer or investor references.'],
+          ['Additional Comments','Anything else you want us to know?']
+        ];
+        sections.forEach(function(s, i) {
+          document.write(
+            '<div class="section">' +
+              '<h2>' + (i+1) + '. ' + s[0] + '</h2>' +
+              '<p>' + s[1] + '</p>' +
+              '<div style="margin-top:12px"><label>Your answer</label><textarea placeholder="Enter your response..."></textarea></div>' +
+            '</div>'
+          );
+        });
+      </script>
+    </div>
+  </div>
+</body>
+</html>

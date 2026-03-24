@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+tests/node_modules/
+
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Scratch / temp assets
+~Temp/
+
+# Editor
+.vscode/
+*.swp
+*.swo
