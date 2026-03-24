@@ -1,6 +1,6 @@
-# Evidexa Screenshot
+# Evidexa Viewport
 
-Evidexa Screenshot is a Manifest V3 Chrome extension for capturing full-page screenshots, scrollable app layouts, and selected regions directly in the browser.
+Evidexa Viewport is a Chrome extension for capturing full-page screenshots, scrollable app layouts, and selected regions directly in the browser.
 
 Captured screenshots are stored locally in IndexedDB and can be reviewed from the extension's result tab, copied to the clipboard, or exported as PNG, JPEG, or PDF.
 
@@ -105,4 +105,4 @@ This project is licensed under the Apache License, Version 2.0. See [LICENSE](LI
 
 ## Trademark Notice
 
-`Evidexa`, `Evidexa Screenshot`, and related logos or branding are not licensed for unrestricted reuse under the open source license. The Apache-2.0 license covers the code, but it does not grant permission to use trade names, trademarks, service marks, or product branding except for reasonable and customary reference to the origin of the project.
+`Evidexa`, `Evidexa Viewport`, and related logos or branding are not licensed for unrestricted reuse under the open source license. The Apache-2.0 license covers the code, but it does not grant permission to use trade names, trademarks, service marks, or product branding except for reasonable and customary reference to the origin of the project.
