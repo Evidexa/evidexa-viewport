@@ -1,3 +1,7 @@
+# Extension build artifacts — never commit these
+*.pem   # private signing key — store in a password manager / secrets vault
+*.crx   # packed extension binary — regenerate from source with the .pem
+
 # Dependencies
 node_modules/
 tests/node_modules/
