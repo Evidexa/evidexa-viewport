@@ -6,6 +6,24 @@ Features not yet implemented, ordered by estimated user value.
 
 ## High Priority
 
+### Custom Device Presets
+Let users create and save their own viewport presets instead of relying only on the built-in device list.
+
+**Approach:** Add a custom preset editor in Settings with `name`, `width`, `height`, `dpr`, optional mobile flag, and optional user agent. Persist presets in `chrome.storage.sync` and surface them in the "Render as…" menu and full-tab UI.
+
+**Effort:** Medium.
+
+---
+
+### Saved Viewport Sets
+Save reusable collections like "iPhone + iPad + Desktop" or "Client QA Pack".
+
+**Approach:** Introduce named viewport-set records that reference built-in and custom presets. Add "Save current selection as set" in the full-tab UI and a quick picker for rerunning a saved set.
+
+**Effort:** Medium.
+
+---
+
 ### Annotations
 Draw on top of a capture before saving: arrows, rectangles, text labels, highlighter.
 
@@ -34,6 +52,33 @@ Embed the source URL and timestamp directly into the screenshot canvas.
 ---
 
 ## Medium Priority
+
+### Batch Device Capture + ZIP Export
+Capture several viewport presets in one run and download them as a ZIP bundle.
+
+**Approach:** Extend device capture to queue multiple presets against the same URL, save each result as a separate capture, then offer "Export set" via `CompressionStream` or `JSZip`. This can share infrastructure with Saved Viewport Sets.
+
+**Effort:** Large.
+
+---
+
+### Multi-Viewport Workspace
+Preview and capture the same page in several devices side by side from one workspace.
+
+**Approach:** Add a workspace view in `tab.html` that lays out multiple viewport cards, each bound to a preset. Start with synchronized URL/reload controls and per-card capture, then optionally add synchronized scroll.
+
+**Effort:** Large.
+
+---
+
+### Device Frames / Presentation Mode
+Wrap raw captures in optional device mockups and labeled comparison layouts for sharing.
+
+**Approach:** Add a presentation export mode that composites screenshots into simple phone/tablet/browser frames on an `OffscreenCanvas`, with optional labels, background, and timestamp.
+
+**Effort:** Medium.
+
+---
 
 ### Diff / Compare View
 Compare two captures of the same URL to highlight what changed.
@@ -68,6 +113,33 @@ Automatically capture a URL on a schedule (e.g. daily).
 **Approach:** `chrome.alarms` API for scheduling. Stored schedule list in `chrome.storage.sync`. Background service worker wakes on alarm, opens the URL in a background tab, captures, saves. Requires `"background"` permission (already present as service worker).
 
 **Effort:** Large (background tab management, de-duplication).
+
+---
+
+### Behavioral Overlay
+Overlay simulated attention, click-likelihood, hesitation, or heatmap views on top of a captured screen.
+
+**Approach:** Use Evidexa behavioral models against a saved capture or live page snapshot, then render heatmap and path overlays in `tab.html` as a toggleable analysis layer. Start with static overlays before adding animation.
+
+**Effort:** Very large (model integration + overlay UX).
+
+---
+
+### Persona Task Simulation
+Ask digital twins to complete a task on a captured experience and report likely path, friction, and completion risk.
+
+**Approach:** Let the user provide a goal such as "find pricing" or "submit the form", run one or more Evidexa personas against the capture, and return a structured report with predicted click path, hesitation zones, trust concerns, and heuristics.
+
+**Effort:** Very large (simulation product + reporting UX).
+
+---
+
+### Viewport Behavior Comparison
+Compare how simulated users behave across devices, variants, or revisions.
+
+**Approach:** Run the same persona/task across desktop vs mobile, or capture A vs B, then present differences in attention concentration, CTA discoverability, and predicted completion likelihood.
+
+**Effort:** Very large.
 
 ---
 
